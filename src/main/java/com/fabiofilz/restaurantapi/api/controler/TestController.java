@@ -5,7 +5,10 @@ import com.fabiofilz.restaurantapi.domain.model.Restaurant;
 import com.fabiofilz.restaurantapi.domain.repository.CuisineRepository;
 import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -55,6 +58,11 @@ public class TestController {
   @GetMapping("/restaurants/count-by-cuisine")
   public int getcountByCuisineId(@RequestParam("cuisineId") Long cuisineId){
     return restaurantRepository.countByCuisineId(cuisineId);
+  }
+
+  @GetMapping("/cuisines/by-fullname")
+  public List<Cuisine> getCuisineByFullName(@RequestParam("name") String cuisineName){
+    return cuisineRepository.searchByFullName(cuisineName);
   }
 
 }
