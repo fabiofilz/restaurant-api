@@ -2,6 +2,7 @@
 
     import com.fabiofilz.restaurantapi.domain.exceptions.EntityInUseException;
     import com.fabiofilz.restaurantapi.domain.exceptions.EntityNotFoundException;
+    import com.fabiofilz.restaurantapi.domain.model.Cuisine;
     import com.fabiofilz.restaurantapi.domain.model.Restaurant;
     import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepository;
     import com.fabiofilz.restaurantapi.domain.service.RestaurantService;
@@ -116,4 +117,5 @@ public class RestaurantController {
             ReflectionUtils.setField(field, target, newValue);
         });
     }
+
 }

@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface CuisineRepository extends JpaRepository<Cuisine, Long> {
 
-//    List<Cuisine> getByName(String name);
+    List<Cuisine> findByNameContaining(String name);
 
 }
