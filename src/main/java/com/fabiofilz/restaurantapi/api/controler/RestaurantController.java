@@ -16,6 +16,7 @@
     import java.lang.reflect.Field;
     import java.util.List;
     import java.util.Map;
+    import java.util.Optional;
 
     @RestController
 @RequestMapping("/restaurants")
@@ -30,17 +31,17 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> getAll(){
 
-        return restaurantRepository.getAll();
+        return restaurantRepository.findAll();
 
     }
 
     @GetMapping(value="/{restaurantId}")
     public ResponseEntity<Restaurant> getById (@PathVariable Long restaurantId){
 
-        Restaurant restaurant = restaurantRepository.getById(restaurantId);
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 
-        if (restaurant != null){
-            return ResponseEntity.ok(restaurant);
+        if (restaurant.isEmpty()){
+            return ResponseEntity.ok(restaurant.get());
         }
 
         return ResponseEntity.notFound().build();
@@ -63,12 +64,13 @@ public class RestaurantController {
 
     @PutMapping(value = "/{restaurantId}")
     public ResponseEntity<Restaurant> update(@PathVariable Long restaurantId,
-                                          @RequestBody Restaurant restaurant){
+                                             @RequestBody Restaurant restaurant){
 
-        Restaurant actualRestaurant = restaurantRepository.getById(restaurantId);
-        if(actualRestaurant != null) {
-            BeanUtils.copyProperties(restaurant, actualRestaurant, "id");
-            return ResponseEntity.ok(restaurantService.save(actualRestaurant));
+        Optional<Restaurant> actualRestaurant = restaurantRepository.findById(restaurantId);
+        if(actualRestaurant.isPresent()) {
+            BeanUtils.copyProperties(restaurant, actualRestaurant.get(), "id");
+            Restaurant savedRestaurant = restaurantService.save(actualRestaurant.get());
+            return ResponseEntity.ok(savedRestaurant);
         }
 
         return ResponseEntity.notFound().build();
@@ -90,15 +92,15 @@ public class RestaurantController {
     public ResponseEntity<?> parcialUpdate(@PathVariable Long restaurantId,
                                               @RequestBody Map<String, Object> campos) {
 
-        Restaurant atualRestaurant = restaurantRepository.getById(restaurantId);
+        Optional<Restaurant> atualRestaurant = restaurantRepository.findById(restaurantId);
 
-        if (atualRestaurant == null) {
+        if (atualRestaurant.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        merge(campos, atualRestaurant);
+        merge(campos, atualRestaurant.get());
 
-        return update(restaurantId, atualRestaurant);
+        return update(restaurantId, atualRestaurant.get());
     }
 
     private void merge(Map<String, Object> source, Restaurant target) {

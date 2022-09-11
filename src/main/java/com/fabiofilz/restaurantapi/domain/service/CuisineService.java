@@ -7,8 +7,6 @@ import com.fabiofilz.restaurantapi.domain.repository.CuisineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +22,7 @@ public class CuisineService {
     public void delete(Long cuisineId){
 
         try{
-        cuisineRepository.delete(cuisineId);
+        cuisineRepository.deleteById(cuisineId);
 
         } catch (EmptyResultDataAccessException e){
             throw new EntityNotFoundException(

@@ -15,9 +15,9 @@ public class TestController {
   private CuisineRepository cuisineRepository;
 
   // Using Query Params - http://localhost:8080/test/cuisines/by-name?name=Thai
-  @GetMapping("/cuisines/by-name")
-  public List<Cuisine> getCuisineByName(@RequestParam("name") String cuisineName){
-    return cuisineRepository.getByName(cuisineName);
-  }
+//  @GetMapping("/cuisines/by-name")
+//  public List<Cuisine> getCuisineByName(@RequestParam("name") String cuisineName){
+//    return cuisineRepository.getByName(cuisineName);
+//  }
 
 }

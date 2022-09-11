@@ -1,15 +1,13 @@
 package com.fabiofilz.restaurantapi.domain.repository;
 
 import com.fabiofilz.restaurantapi.domain.model.Cuisine;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+@Repository
+public interface CuisineRepository extends JpaRepository<Cuisine, Long> {
 
-public interface CuisineRepository {
-
-    List<Cuisine> getAll();
-    List<Cuisine> getByName(String name);
-    Cuisine getById(Long id);
-    Cuisine save(Cuisine cuisine);
-    void delete(Long cuisine);
+//    List<Cuisine> getByName(String name);
 
 }

@@ -1,14 +1,10 @@
 package com.fabiofilz.restaurantapi.domain.repository;
 
 import com.fabiofilz.restaurantapi.domain.model.City;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface CityRepository {
-
-    List<City> getAll();
-    City getById(Long id);
-    City save(City city);
-    void delete(Long cityId);
+@Repository
+public interface CityRepository extends JpaRepository<City, Long> {
 
 }

@@ -25,21 +25,18 @@ public class RestaurantService {
 
         Long cuisineId = restaurant.getCuisine().getId();
 
-        Cuisine cuisine = cuisineRepository.getById(cuisineId);
-
-        if (cuisine == null){
-            throw new EntityNotFoundException(
-                    String.format("CuisineId %d not found", cuisineId)
-            );
-        }
+        Cuisine cuisine = cuisineRepository.findById(cuisineId)
+            .orElseThrow(() -> new EntityNotFoundException(
+                String.format("CuisineId %d not found", cuisineId)));
 
         restaurant.setCuisine(cuisine);
+
         return restaurantRepository.save(restaurant);
     }
 
     public void delete(Long restaurantId){
         try{
-            restaurantRepository.delete(restaurantId);
+            restaurantRepository.deleteById(restaurantId);
         } catch (EmptyResultDataAccessException e){
             throw new EntityNotFoundException(
                     String.format("Restaurant {} not found", restaurantId)

@@ -11,6 +11,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CityService {
 
@@ -25,21 +27,21 @@ public class CityService {
 
         Long stateId = city.getState().getId();
 
-        State state = stateRepository.getById(stateId);
+        Optional<State> state = stateRepository.findById(stateId);
 
-        if (state == null){
+        if (state.isEmpty()){
             throw new EntityNotFoundException(
                     String.format("StateId %d not found", stateId)
             );
         }
 
-        city.setState(state);
+        city.setState(state.get());
         return cityRepository.save(city);
     }
 
     public void delete(Long cityId){
         try{
-            cityRepository.delete(cityId);
+            cityRepository.deleteById(cityId);
         } catch (EmptyResultDataAccessException e){
             throw new EntityNotFoundException(
                     String.format("City {} not found", cityId)

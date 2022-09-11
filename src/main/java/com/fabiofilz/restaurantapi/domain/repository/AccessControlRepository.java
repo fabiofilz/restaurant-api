@@ -1,14 +1,10 @@
 package com.fabiofilz.restaurantapi.domain.repository;
 
 import com.fabiofilz.restaurantapi.domain.model.AccessControl;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface AccessControlRepository {
-
-    List<AccessControl> getAll();
-    AccessControl getById(Long id);
-    AccessControl save(AccessControl accessControl);
-    void delete(AccessControl accessControl);
+@Repository
+public interface AccessControlRepository extends JpaRepository<AccessControl, Long> {
 
 }

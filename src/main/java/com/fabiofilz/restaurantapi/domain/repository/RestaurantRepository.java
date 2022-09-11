@@ -1,14 +1,9 @@
 package com.fabiofilz.restaurantapi.domain.repository;
 
 import com.fabiofilz.restaurantapi.domain.model.Restaurant;
-
-import java.util.List;
-
-public interface RestaurantRepository {
-
-    List<Restaurant> getAll();
-    Restaurant getById(Long id);
-    Restaurant save(Restaurant restaurant);
-    void delete(Long restaurantId);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+@Repository
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
 }
