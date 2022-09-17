@@ -20,7 +20,6 @@ public class RestaurantService {
     @Autowired
     CuisineRepository cuisineRepository;
 
-
     public Restaurant save(Restaurant restaurant){
 
         Long cuisineId = restaurant.getCuisine().getId();

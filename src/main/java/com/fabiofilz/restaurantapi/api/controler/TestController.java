@@ -65,4 +65,9 @@ public class TestController {
     return cuisineRepository.searchByFullName(cuisineName);
   }
 
+  @GetMapping("/restaurants/by-name-and-deliveryfee")
+  public List<Restaurant> restaurantsByNameAndDeliveryFee(String name, BigDecimal deliveryFeeFrom, BigDecimal deliveryFeeTo){
+    return restaurantRepository.findImplQueries(name, deliveryFeeFrom, deliveryFeeTo);
+  }
+
 }
