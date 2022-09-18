@@ -4,8 +4,6 @@ import com.fabiofilz.restaurantapi.domain.model.Cuisine;
 import com.fabiofilz.restaurantapi.domain.model.Restaurant;
 import com.fabiofilz.restaurantapi.domain.repository.CuisineRepository;
 import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepository;
-import com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantWithFreeDeliveryFeeSpec;
-import com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantWithNameLikeSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
+import static com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantSpec.*;
 
 @RestController
 @RequestMapping("/test")
@@ -74,9 +74,6 @@ public class TestController {
 
   @GetMapping("/restaurants/free-delivery-fee")
   public List<Restaurant> findRestaurantFreeDeliveryFee(String name){
-    var withFreeDeliveryFee = new RestaurantWithFreeDeliveryFeeSpec();
-    var withNameLike = new RestaurantWithNameLikeSpec(name);
-
-    return restaurantRepository.findAll(withFreeDeliveryFee.and(withNameLike));
+    return restaurantRepository.findAll(withNameLike(name).and(withFreeDeliveryFee()));
   }
 }
