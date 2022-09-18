@@ -4,6 +4,8 @@ import com.fabiofilz.restaurantapi.domain.model.Cuisine;
 import com.fabiofilz.restaurantapi.domain.model.Restaurant;
 import com.fabiofilz.restaurantapi.domain.repository.CuisineRepository;
 import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepository;
+import com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantWithFreeDeliveryFeeSpec;
+import com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantWithNameLikeSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,4 +72,11 @@ public class TestController {
     return restaurantRepository.findImplQueries(name, deliveryFeeFrom, deliveryFeeTo);
   }
 
+  @GetMapping("/restaurants/free-delivery-fee")
+  public List<Restaurant> findRestaurantFreeDeliveryFee(String name){
+    var withFreeDeliveryFee = new RestaurantWithFreeDeliveryFeeSpec();
+    var withNameLike = new RestaurantWithNameLikeSpec(name);
+
+    return restaurantRepository.findAll(withFreeDeliveryFee.and(withNameLike));
+  }
 }
