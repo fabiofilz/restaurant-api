@@ -74,6 +74,6 @@ public class TestController {
 
   @GetMapping("/restaurants/free-delivery-fee")
   public List<Restaurant> findRestaurantFreeDeliveryFee(String name){
-    return restaurantRepository.findAll(withNameLike(name).and(withFreeDeliveryFee()));
+    return restaurantRepository.findWithFreeDeliveryFee(name);
   }
 }

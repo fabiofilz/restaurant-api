@@ -1,7 +1,10 @@
 package com.fabiofilz.restaurantapi.infrastructure.repository;
 
 import com.fabiofilz.restaurantapi.domain.model.Restaurant;
+import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepository;
 import com.fabiofilz.restaurantapi.domain.repository.RestaurantRepositoryQueries;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -12,11 +15,16 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantSpec.*;
+
 @Repository
 public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
   @PersistenceContext
   private EntityManager entityManager;
+
+  @Autowired @Lazy
+  private RestaurantRepository restaurantRepository;
 
   @Override
   public List<Restaurant> findImplQueries(String name, BigDecimal deliveryFeeFrom, BigDecimal deliveryFeeTo){
@@ -48,6 +56,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
     return query.getResultList();
 
+  }
+
+  @Override
+  public List<Restaurant> findWithFreeDeliveryFee(String name) {
+    return restaurantRepository.findAll(withNameLike(name).and(withFreeDeliveryFee()));
   }
 
 }
