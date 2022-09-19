@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.fabiofilz.restaurantapi.infrastructure.spec.RestaurantSpec.*;
-
 @RestController
 @RequestMapping("/test")
 public class TestController {
@@ -76,4 +74,15 @@ public class TestController {
   public List<Restaurant> findRestaurantFreeDeliveryFee(String name){
     return restaurantRepository.findWithFreeDeliveryFee(name);
   }
+
+  @GetMapping("/restaurants/find-first")
+  public Optional<Restaurant> findFirstRestaurant(){
+    return restaurantRepository.findFirst();
+  }
+
+  @GetMapping("/cuisine/find-first")
+  public Optional<Cuisine> findFirstCuisine(){
+    return cuisineRepository.findFirst();
+  }
+
 }
